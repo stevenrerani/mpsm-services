@@ -8,7 +8,7 @@ const SLIDES = [
     id:       'it-consulting',
     num:      '01',
     name:     'IT Consulting & Infrastructure',
-    tagline:  'Resilient, scalable technology for South African enterprise — from cloud migration to 24/7 managed IT.',
+    tagline:  'Resilient, scalable technology for South African enterprise: cloud migration, cybersecurity, and 24/7 managed IT.',
     caps:     ['Cloud Migration', 'Cybersecurity', 'Network Design'],
     href:     '/it-consulting',
     img:      'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=1400&q=80&fit=crop&crop=center',
@@ -28,7 +28,7 @@ const SLIDES = [
     id:       'procurement',
     num:      '03',
     name:     'Procurement (PaaS)',
-    tagline:  'Strategic sourcing as a managed service — turning your supply chain into a competitive advantage.',
+    tagline:  'Strategic sourcing as a managed service, turning your supply chain from a cost centre into a competitive advantage.',
     caps:     ['Vendor Management', 'Cost Optimisation', 'BBBEE Sourcing'],
     href:     '/procurement',
     img:      'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1400&q=80&fit=crop&crop=center',
@@ -101,10 +101,11 @@ export default function DivisionSlider() {
     if (!pausedRef.current) goTo((current + 1) % SLIDES.length)
   }, [current, goTo])
 
-  /* Auto-advance */
+  /* Auto-advance — disabled entirely when user prefers reduced motion (WCAG 2.2.2) */
   useEffect(() => {
-    timerRef.current = setInterval(advance, INTERVAL)
-    return () => clearInterval(timerRef.current)
+    if (prefersReducedMotion()) return
+    const id = setInterval(advance, INTERVAL)
+    return () => clearInterval(id)
   }, [advance])
 
   /* Progress bar reset on slide change */
@@ -131,7 +132,18 @@ export default function DivisionSlider() {
       style={{ height: '88vh', minHeight: '560px', backgroundColor: '#1D2B1D' }}
       onMouseEnter={() => { pausedRef.current = true }}
       onMouseLeave={() => { pausedRef.current = false }}
+      onKeyDown={e => {
+        if (e.key === 'ArrowLeft')  goTo((current - 1 + SLIDES.length) % SLIDES.length, -1)
+        if (e.key === 'ArrowRight') goTo((current + 1) % SLIDES.length, 1)
+      }}
+      tabIndex={-1}
+      aria-roledescription="carousel"
+      aria-label="MPSM Services divisions"
     >
+      {/* Live region — announces current slide to screen readers */}
+      <div aria-live="polite" aria-atomic="true" className="sr-only">
+        {SLIDES[current].name} — slide {current + 1} of {SLIDES.length}
+      </div>
       {/* Slides */}
       {SLIDES.map((slide, i) => (
         <div
@@ -240,7 +252,7 @@ export default function DivisionSlider() {
                   <button
                     onClick={() => goTo((current - 1 + SLIDES.length) % SLIDES.length, -1)}
                     aria-label="Previous division"
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-200"
+                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200"
                     style={{ border: '1px solid rgba(246,240,232,0.25)', color: '#F6F0E8' }}
                     onMouseOver={e => e.currentTarget.style.borderColor = '#C4763A'}
                     onMouseOut={e  => e.currentTarget.style.borderColor = 'rgba(246,240,232,0.25)'}
@@ -250,7 +262,7 @@ export default function DivisionSlider() {
                   <button
                     onClick={() => goTo((current + 1) % SLIDES.length, 1)}
                     aria-label="Next division"
-                    className="w-10 h-10 rounded-full flex items-center justify-center transition-colors duration-200"
+                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200"
                     style={{ border: '1px solid rgba(246,240,232,0.25)', color: '#F6F0E8' }}
                     onMouseOver={e => e.currentTarget.style.borderColor = '#C4763A'}
                     onMouseOut={e  => e.currentTarget.style.borderColor = 'rgba(246,240,232,0.25)'}

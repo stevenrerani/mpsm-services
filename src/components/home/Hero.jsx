@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { prefersReducedMotion } from '../../hooks/useReducedMotion'
 import SectionLabel from '../layout/SectionLabel'
-import ImagePlaceholder from '../ui/ImagePlaceholder'
 import Badge from '../ui/Badge'
 import { Link } from 'react-router-dom'
 
@@ -20,7 +19,7 @@ export default function Hero() {
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
-      const el = headRef.current
+      const el  = headRef.current
 
       if (el) {
         const words = el.textContent.trim().split(/\s+/)
@@ -55,17 +54,26 @@ export default function Hero() {
         }}
       />
 
-      {/* Off-grid image — bleeds to right */}
-      <div className="absolute top-[72px] right-0 bottom-0 w-[42%] lg:w-[38%] hidden lg:block">
-        <ImagePlaceholder
-          shape="organic2"
-          aspect="auto"
-          palette="forest"
-          alt="MPSM Services — replace with photography"
-          className="h-full w-full"
-          style={{ borderRadius: '40px 0 0 40px' }}
+      {/* Hero image — right column, bleeds to edge */}
+      <div className="absolute top-0 right-0 bottom-0 w-[45%] hidden lg:block">
+        <img
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&fit=crop&crop=top"
+          alt="MPSM Services — South African enterprise leadership"
+          className="absolute inset-0 w-full h-full object-cover"
+          loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-transparent to-[#1D2B1D]/70 rounded-[40px_0_0_40px]" />
+        {/* Forest tint overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'linear-gradient(135deg, rgba(29,43,29,0.80) 0%, rgba(29,43,29,0.45) 55%, rgba(29,43,29,0.65) 100%)',
+          }}
+        />
+        {/* Fade left edge into the dark section */}
+        <div
+          className="absolute inset-0"
+          style={{ background: 'linear-gradient(to right, #1D2B1D 0%, transparent 28%)' }}
+        />
       </div>
 
       {/* Content */}

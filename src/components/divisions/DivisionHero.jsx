@@ -1,67 +1,107 @@
-import React, { useRef, useEffect } from 'react';
-import gsap from 'gsap';
-import SectionWrapper from '../ui/SectionWrapper';
-import SectionLabel from '../layout/SectionLabel';
-import ImagePlaceholder from '../ui/ImagePlaceholder';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useEffect, useRef } from 'react'
+import { gsap } from 'gsap'
+import { prefersReducedMotion } from '../../hooks/useReducedMotion'
+import Badge from '../ui/Badge'
 
-export default function DivisionHero({ data }) {
-  const headlineRef = useRef(null);
-  const textRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+/* Matched to the homepage DivisionSlider images for visual continuity */
+const IMAGES = {
+  'it-consulting': 'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=900&q=80&fit=crop&crop=center',
+  water:           'https://images.unsplash.com/photo-1519455953755-af066f52f1a6?w=900&q=80&fit=crop&crop=center',
+  procurement:     'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=900&q=80&fit=crop&crop=center',
+  energy:          'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900&q=80&fit=crop&crop=center',
+}
+
+export default function DivisionHero({ division }) {
+  const headRef = useRef(null)
+  const subRef  = useRef(null)
 
   useEffect(() => {
-    if (prefersReducedMotion || !headlineRef.current) return;
+    if (prefersReducedMotion()) {
+      gsap.set([headRef.current, subRef.current], { opacity: 1, y: 0 })
+      return
+    }
 
-    const words = headlineRef.current.querySelectorAll('.word');
-    
-    gsap.from(words, {
-      y: 40,
-      opacity: 0,
-      stagger: 0.05,
-      duration: 0.7,
-      ease: "power2.out",
-      delay: 0.2
-    });
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
+      const el  = headRef.current
 
-    gsap.from(textRef.current, {
-      y: 30,
-      opacity: 0,
-      duration: 0.8,
-      ease: "power2.out",
-      delay: 0.5
-    });
-  }, [prefersReducedMotion]);
+      if (el) {
+        const words = el.textContent.trim().split(/\s+/)
+        el.innerHTML = words.map(w =>
+          `<span style="overflow:hidden;display:inline-block;vertical-align:bottom"><span class="w" style="display:inline-block">${w}</span></span>`
+        ).join(' ')
+        tl.fromTo(el.querySelectorAll('.w'),
+          { y: 36, opacity: 0 },
+          { y: 0, opacity: 1, stagger: 0.06, duration: 0.7, delay: 0.15 }
+        )
+      }
 
-  const wrapWords = (text) => {
-    return text.split(' ').map((word, i) => (
-      <span key={i} className="inline-block overflow-hidden pb-2 -mb-2">
-        <span className="word inline-block">{word}&nbsp;</span>
-      </span>
-    ));
-  };
+      tl.fromTo(subRef.current, { y: 18, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6 }, '-=0.2')
+    })
+
+    return () => ctx.revert()
+  }, [])
+
+  const img = IMAGES[division.id]
 
   return (
-    <SectionWrapper dark className="py-20 md:py-32">
-      <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-center">
-        
-        <div className="w-full lg:w-[60%] flex flex-col items-start">
-          <SectionLabel>{data.title}</SectionLabel>
-          
-          <h1 ref={headlineRef} className="text-[var(--color-text-on-dark)] mb-8 max-w-3xl">
-            {wrapWords(data.headline)}
-          </h1>
-          
-          <p ref={textRef} className="text-[var(--color-bg-secondary)] text-lg max-w-xl">
-            {data.overview}
-          </p>
-        </div>
+    <section
+      className="relative min-h-[72vh] flex items-end overflow-hidden"
+      style={{ backgroundColor: '#1D2B1D' }}
+    >
+      {/* Subtle texture */}
+      <div
+        className="absolute inset-0 opacity-[0.025] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F6F0E8' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40z'/%3E%3C/g%3E%3C/svg%3E")`,
+          backgroundSize: '80px 80px',
+        }}
+      />
 
-        <div className="w-full lg:w-[40%] h-[400px] lg:h-[500px]">
-          <ImagePlaceholder shape={3} />
+      {/* Off-grid image — bleeds to right edge */}
+      {img && (
+        <div className="absolute top-[72px] right-0 bottom-0 w-[42%] lg:w-[38%] hidden lg:block">
+          <img
+            src={img}
+            alt={`${division.title} — MPSM Services`}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ borderRadius: '40px 0 0 40px' }}
+            loading="eager"
+          />
+          {/* Forest tint matching slider palette */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(135deg, rgba(29,43,29,0.75) 0%, rgba(29,43,29,0.40) 60%, rgba(29,43,29,0.60) 100%)',
+              borderRadius: '40px 0 0 40px',
+            }}
+          />
+          {/* Fade to the left so text area is clear */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(to right, #1D2B1D 0%, transparent 30%)',
+              borderRadius: '40px 0 0 40px',
+            }}
+          />
         </div>
-        
+      )}
+
+      {/* Content */}
+      <div className="container relative z-10 pt-[110px] pb-16 lg:pb-20 w-full">
+        <div style={{ maxWidth: '58ch' }}>
+          <div className="flex flex-wrap gap-2.5 mb-6">
+            <Badge variant="clay">MPSM Services</Badge>
+          </div>
+          <h1 ref={headRef} className="font-serif text-[#F6F0E8] mb-5" style={{ maxWidth: '100%' }}>
+            {division.title}
+          </h1>
+          <p ref={subRef} className="font-sans text-lg text-[#F6F0E8]/60 leading-relaxed" style={{ maxWidth: '52ch' }}>
+            {division.overview.length > 180 ? division.overview.slice(0, 180) + '…' : division.overview}
+          </p>
+          <div className="mt-8 w-16 h-[2px]" style={{ backgroundColor: '#C4763A' }} />
+        </div>
       </div>
-    </SectionWrapper>
-  );
+    </section>
+  )
 }
