@@ -139,13 +139,7 @@ export default function ContactInfo() {
             </a>
           </div>
 
-          {/* Grid lines */}
-          <div className="absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: 'linear-gradient(rgba(212,168,67,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(212,168,67,0.3) 1px, transparent 1px)',
-              backgroundSize: '30px 30px',
-            }}
-          />
+
         </div>
       </div>
     </div>

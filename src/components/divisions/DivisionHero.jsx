@@ -49,15 +49,6 @@ export default function DivisionHero({ division }) {
       className="relative min-h-[72vh] flex items-end overflow-hidden"
       style={{ backgroundColor: '#1D2B1D' }}
     >
-      {/* Subtle texture */}
-      <div
-        className="absolute inset-0 opacity-[0.025] pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F6F0E8' fill-rule='evenodd'%3E%3Cpath d='M0 0h40v40H0V0zm40 40h40v40H40V40z'/%3E%3C/g%3E%3C/svg%3E")`,
-          backgroundSize: '80px 80px',
-        }}
-      />
-
       {/* Off-grid image — bleeds to right edge */}
       {img && (
         <div className="absolute top-[72px] right-0 bottom-0 w-[42%] lg:w-[38%] hidden lg:block">
