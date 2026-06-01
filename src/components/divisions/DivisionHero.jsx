@@ -5,10 +5,10 @@ import Badge from '../ui/Badge'
 
 /* Matched to the homepage DivisionSlider images for visual continuity */
 const IMAGES = {
-  'it-consulting': 'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=900&q=80&fit=crop&crop=center',
-  water:           'https://images.unsplash.com/photo-1519455953755-af066f52f1a6?w=900&q=80&fit=crop&crop=center',
-  procurement:     'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=900&q=80&fit=crop&crop=center',
-  energy:          'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900&q=80&fit=crop&crop=center',
+  'it-consulting': 'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=900&q=80&fit=crop&crop=center&auto=format,compress',
+  water:           'https://images.unsplash.com/photo-1519455953755-af066f52f1a6?w=900&q=80&fit=crop&crop=center&auto=format,compress',
+  procurement:     'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=900&q=80&fit=crop&crop=center&auto=format,compress',
+  energy:          'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=900&q=80&fit=crop&crop=center&auto=format,compress',
 }
 
 export default function DivisionHero({ division }) {
@@ -46,8 +46,7 @@ export default function DivisionHero({ division }) {
 
   return (
     <section
-      className="relative min-h-[72vh] flex items-end overflow-hidden"
-      style={{ backgroundColor: '#1D2B1D' }}
+      className="relative min-h-[72vh] flex items-end overflow-hidden bg-forest"
     >
       {/* Off-grid image — bleeds to right edge */}
       {img && (
@@ -55,24 +54,22 @@ export default function DivisionHero({ division }) {
           <img
             src={img}
             alt={`${division.title} — MPSM Services`}
-            className="absolute inset-0 w-full h-full object-cover"
-            style={{ borderRadius: '40px 0 0 40px' }}
+            className="absolute inset-0 w-full h-full object-cover rounded-l-[40px]"
             loading="eager"
+            fetchpriority="high"
           />
           {/* Forest tint matching slider palette */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 rounded-l-[40px]"
             style={{
               background: 'linear-gradient(135deg, rgba(29,43,29,0.75) 0%, rgba(29,43,29,0.40) 60%, rgba(29,43,29,0.60) 100%)',
-              borderRadius: '40px 0 0 40px',
             }}
           />
           {/* Fade to the left so text area is clear */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 rounded-l-[40px]"
             style={{
-              background: 'linear-gradient(to right, #1D2B1D 0%, transparent 30%)',
-              borderRadius: '40px 0 0 40px',
+              background: 'linear-gradient(to right, var(--color-forest) 0%, transparent 30%)',
             }}
           />
         </div>
@@ -84,13 +81,13 @@ export default function DivisionHero({ division }) {
           <div className="flex flex-wrap gap-2.5 mb-6">
             <Badge variant="clay">MPSM Services</Badge>
           </div>
-          <h1 ref={headRef} className="font-serif text-[#F6F0E8] mb-5" style={{ maxWidth: '100%' }}>
+          <h1 ref={headRef} className="font-serif text-sand mb-5" style={{ maxWidth: '100%' }}>
             {division.title}
           </h1>
-          <p ref={subRef} className="font-sans text-lg text-[#F6F0E8]/60 leading-relaxed" style={{ maxWidth: '52ch' }}>
+          <p ref={subRef} className="font-sans text-lg text-sand/60 leading-relaxed" style={{ maxWidth: '52ch' }}>
             {division.overview.length > 180 ? division.overview.slice(0, 180) + '…' : division.overview}
           </p>
-          <div className="mt-8 w-16 h-[2px]" style={{ backgroundColor: '#C4763A' }} />
+          <div className="mt-8 w-16 h-[2px] bg-clay" />
         </div>
       </div>
     </section>

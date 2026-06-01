@@ -42,16 +42,16 @@ export default function Hero() {
 
   return (
     <section
-      className="relative min-h-screen flex items-center overflow-hidden"
-      style={{ backgroundColor: '#1D2B1D' }}
+      className="relative min-h-screen flex items-center overflow-hidden bg-forest"
     >
       {/* Hero image — right column, bleeds to edge */}
       <div className="absolute top-0 right-0 bottom-0 w-[45%] hidden lg:block">
         <img
-          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&fit=crop&crop=top"
+          src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=80&fit=crop&crop=top&auto=format,compress"
           alt="MPSM Services — South African enterprise leadership"
           className="absolute inset-0 w-full h-full object-cover"
           loading="eager"
+          fetchpriority="high"
         />
         {/* Forest tint overlay */}
         <div
@@ -63,7 +63,7 @@ export default function Hero() {
         {/* Fade left edge into the dark section */}
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(to right, #1D2B1D 0%, transparent 28%)' }}
+          style={{ background: 'linear-gradient(to right, var(--color-forest) 0%, transparent 28%)' }}
         />
       </div>
 
@@ -74,30 +74,24 @@ export default function Hero() {
             <SectionLabel light>MPSM Services</SectionLabel>
           </div>
 
-          <h1 ref={headRef} className="font-serif text-[#F6F0E8] mb-6">
+          <h1 ref={headRef} className="font-serif text-sand mb-6">
             Enterprise Solutions Built for South Africa
           </h1>
 
-          <p ref={subRef} className="font-sans text-lg text-[#F6F0E8]/65 leading-relaxed mb-10" style={{ maxWidth: '50ch' }}>
+          <p ref={subRef} className="font-sans text-lg text-sand/65 leading-relaxed mb-10" style={{ maxWidth: '50ch' }}>
             A Level 1 BBBEE, 100% Black women-owned enterprise delivering IT, water, procurement, and energy solutions to South Africa's leading organisations.
           </p>
 
           <div ref={actionsRef} className="flex flex-col sm:flex-row gap-4 mb-10">
             <Link
               to="/#divisions"
-              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200"
-              style={{ backgroundColor: '#C4763A', color: '#F6F0E8' }}
-              onMouseOver={e => e.currentTarget.style.backgroundColor = '#A8612E'}
-              onMouseOut={e  => e.currentTarget.style.backgroundColor = '#C4763A'}
+              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200 bg-clay text-sand hover:bg-clay-dark"
             >
               Explore Our Divisions
             </Link>
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200 border"
-              style={{ color: '#F6F0E8', borderColor: 'rgba(246,240,232,0.35)', backgroundColor: 'transparent' }}
-              onMouseOver={e => { e.currentTarget.style.backgroundColor = 'rgba(246,240,232,0.08)'; e.currentTarget.style.borderColor = 'rgba(246,240,232,0.6)' }}
-              onMouseOut={e  => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.borderColor = 'rgba(246,240,232,0.35)' }}
+              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200 border border-sand/35 text-sand bg-transparent hover:bg-sand/10 hover:border-sand/60"
             >
               Partner With Us
             </Link>
@@ -112,8 +106,8 @@ export default function Hero() {
 
       {/* Scroll indicator */}
       <div ref={indicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-        <span className="font-sans text-[10px] tracking-[0.12em] uppercase" style={{ color: 'rgba(246,240,232,0.3)' }}>Scroll</span>
-        <div className="w-px h-10" style={{ backgroundColor: 'rgba(246,240,232,0.15)' }} />
+        <span className="font-sans text-[10px] tracking-[0.12em] uppercase text-sand/30">Scroll</span>
+        <div className="w-px h-10 bg-sand/15" />
       </div>
     </section>
   )

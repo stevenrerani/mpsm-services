@@ -21,28 +21,26 @@ export default function VisionMission({ division }) {
   }, [])
 
   return (
-    <section className="section-py" style={{ backgroundColor: '#F6F0E8' }}>
+    <section className="section-py bg-sand">
       <div className="container">
         <div ref={rowRef} className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
           <div>
-            <p className="font-sans font-semibold text-xs tracking-[0.1em] uppercase mb-5"
-               style={{ color: '#8A9A82' }}>
+            <p className="font-sans font-semibold text-xs tracking-[0.1em] uppercase mb-5 text-ink-muted">
               Vision
             </p>
-            <p className="font-serif text-xl md:text-2xl leading-relaxed" style={{ color: '#1D2B1D' }}>
+            <p className="font-serif text-xl md:text-2xl leading-relaxed text-forest">
               {division.vision}
             </p>
           </div>
 
           <div>
-            <p className="font-sans font-semibold text-xs tracking-[0.1em] uppercase mb-5"
-               style={{ color: '#8A9A82' }}>
+            <p className="font-sans font-semibold text-xs tracking-[0.1em] uppercase mb-5 text-ink-muted">
               Mission
             </p>
-            <p className="font-serif text-xl md:text-2xl leading-relaxed" style={{ color: '#1D2B1D' }}>
+            <p className="font-serif text-xl md:text-2xl leading-relaxed text-forest">
               {division.mission}
             </p>
-            <div className="mt-8 w-12 h-[2px]" style={{ backgroundColor: '#C4763A' }} />
+            <div className="mt-8 w-12 h-[2px] bg-clay" />
           </div>
         </div>
       </div>

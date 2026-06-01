@@ -59,18 +59,17 @@ export default function HorizontalAdvantage() {
   return (
     <section
       ref={sectionRef}
-      className="relative bg-[#F5F0EB] overflow-hidden"
-      style={{ minHeight: '100vh' }}
+      className="relative bg-sand overflow-hidden min-h-screen"
     >
       <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-28 lg:pt-36 pb-16">
         {/* Header */}
         <div className="mb-14">
-          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-[#D4A843] mb-5">
+          <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-gold mb-5">
             The MPSM Advantage
           </p>
           <SplitText
             as="h2"
-            className="text-[#1E1E2A] font-display text-4xl lg:text-5xl leading-[1.1] tracking-[-0.03em] max-w-xl"
+            className="text-forest font-display text-4xl lg:text-5xl leading-[1.1] tracking-[-0.03em] max-w-xl"
             withGoldLine
           >
             Why leading enterprises choose MPSM
@@ -78,10 +77,10 @@ export default function HorizontalAdvantage() {
         </div>
 
         {/* Progress bar */}
-        <div className="h-[1px] bg-[#1E1E2A]/10 mb-12 overflow-hidden">
+        <div className="h-[1px] bg-forest/10 mb-12 overflow-hidden">
           <div
             ref={progressRef}
-            className="h-full bg-[#D4A843] origin-left"
+            className="h-full bg-gold origin-left"
             style={{ transform: 'scaleX(0)' }}
           />
         </div>
@@ -98,44 +97,37 @@ export default function HorizontalAdvantage() {
               return (
                 <div
                   key={adv.id}
-                  className="adv-card flex-shrink-0 rounded-sm p-10 lg:p-12 relative overflow-hidden"
+                  className="adv-card flex-shrink-0 p-10 lg:p-12 relative overflow-hidden bg-white border border-border"
                   style={{
                     width: prefersReduced ? undefined : 'clamp(320px, 36vw, 460px)',
-                    background: '#1A1A2E',
-                    border: '1px solid rgba(212,168,67,0.12)',
                   }}
                 >
                   {/* Large counter */}
-                  <span className="absolute top-8 right-8 font-mono text-white/8 text-5xl font-bold select-none">
+                  <span className="absolute top-8 right-8 font-serif text-sand-deep text-6xl lg:text-7xl font-bold select-none opacity-50">
                     0{i + 1}
                   </span>
 
                   {/* Icon */}
-                  <div
-                    className="w-14 h-14 flex items-center justify-center rounded-sm mb-8"
-                    style={{
-                      backgroundColor: `${adv.color}15`,
-                      border: `1px solid ${adv.color}25`,
-                    }}
-                  >
-                    <Icon size={24} style={{ color: adv.color }} />
+                  <div className="w-14 h-14 flex items-center justify-center rounded-full mb-10 bg-sand">
+                    <Icon size={24} className="text-clay" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="text-white font-heading font-bold text-2xl mb-4 leading-tight">
+                  <h3 className="text-forest font-serif text-2xl lg:text-3xl mb-4 leading-tight">
                     {adv.title}
                   </h3>
-                  <p className="text-white/55 font-body text-sm leading-relaxed mb-6">
+                  <p className="text-ink-mid font-sans text-sm lg:text-base leading-relaxed mb-6">
                     {adv.description}
                   </p>
-                  <p className="text-white/30 font-mono text-[11px] tracking-wide italic border-t border-white/8 pt-5">
-                    {adv.detail}
-                  </p>
+                  {adv.detail && (
+                    <p className="text-ink-muted font-sans text-[11px] tracking-wide italic border-t border-border pt-5 mt-auto">
+                      {adv.detail}
+                    </p>
+                  )}
 
                   {/* Bottom accent line */}
                   <div
-                    className="absolute bottom-0 left-0 right-0 h-[2px]"
-                    style={{ backgroundColor: adv.color, opacity: 0.4 }}
+                    className="absolute bottom-0 left-0 right-0 h-[3px] bg-clay opacity-80"
                     aria-hidden="true"
                   />
                 </div>

@@ -19,7 +19,7 @@ export default function PageTransition({ children }) {
   }, [location.pathname])
 
   return (
-    <div ref={wrapperRef} style={{ opacity: 0 }}>
+    <div ref={wrapperRef} className="opacity-0">
       {children}
     </div>
   )

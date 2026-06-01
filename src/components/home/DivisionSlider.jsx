@@ -11,7 +11,7 @@ const SLIDES = [
     tagline:  'Resilient, scalable technology for South African enterprise: cloud migration, cybersecurity, and 24/7 managed IT.',
     caps:     ['Cloud Migration', 'Cybersecurity', 'Network Design'],
     href:     '/it-consulting',
-    img:      'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=1400&q=80&fit=crop&crop=center',
+    img:      'https://images.unsplash.com/photo-1695668548342-c0c1ad479aee?w=1400&q=80&fit=crop&crop=center&auto=format,compress',
     imgAlt:   'Enterprise data centre server infrastructure',
   },
   {
@@ -21,7 +21,7 @@ const SLIDES = [
     tagline:  'Advanced reverse osmosis purification and reliable bulk supply for corporate and industrial clients.',
     caps:     ['Reverse Osmosis', 'Bulk Supply', 'Custom Bottling'],
     href:     '/water',
-    img:      'https://images.unsplash.com/photo-1519455953755-af066f52f1a6?w=1400&q=80&fit=crop&crop=center',
+    img:      'https://images.unsplash.com/photo-1519455953755-af066f52f1a6?w=1400&q=80&fit=crop&crop=center&auto=format,compress',
     imgAlt:   'Industrial water treatment facility',
   },
   {
@@ -31,7 +31,7 @@ const SLIDES = [
     tagline:  'Strategic sourcing as a managed service, turning your supply chain from a cost centre into a competitive advantage.',
     caps:     ['Vendor Management', 'Cost Optimisation', 'BBBEE Sourcing'],
     href:     '/procurement',
-    img:      'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1400&q=80&fit=crop&crop=center',
+    img:      'https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=1400&q=80&fit=crop&crop=center&auto=format,compress',
     imgAlt:   'Enterprise warehouse and logistics operations',
   },
   {
@@ -41,7 +41,7 @@ const SLIDES = [
     tagline:  'Sustainable, grid-independent power systems that eliminate load shedding and reduce your carbon footprint.',
     caps:     ['Commercial Solar', 'Backup Power', 'Energy Audits'],
     href:     '/energy',
-    img:      'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1400&q=80&fit=crop&crop=center',
+    img:      'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1400&q=80&fit=crop&crop=center&auto=format,compress',
     imgAlt:   'Commercial solar array installation',
   },
 ]
@@ -128,8 +128,8 @@ export default function DivisionSlider() {
 
   return (
     <section
-      className="relative overflow-hidden"
-      style={{ height: '88vh', minHeight: '560px', backgroundColor: '#1D2B1D' }}
+      className="relative overflow-hidden bg-forest"
+      style={{ height: '88vh', minHeight: '560px' }}
       onMouseEnter={() => { pausedRef.current = true }}
       onMouseLeave={() => { pausedRef.current = false }}
       onKeyDown={e => {
@@ -159,6 +159,7 @@ export default function DivisionSlider() {
             className="absolute inset-0 w-full h-full object-cover"
             draggable={false}
             loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
           />
 
           {/* Forest tint overlay — unifies all images with SA earth palette */}
@@ -192,14 +193,14 @@ export default function DivisionSlider() {
 
               {/* Left — main content */}
               <div style={{ maxWidth: '54ch' }}>
-                <p className="font-serif font-bold text-[#F6F0E8]/20 mb-4 select-none leading-none"
+                <p className="font-serif font-bold text-sand/20 mb-4 select-none leading-none"
                    style={{ fontSize: 'clamp(4rem, 8vw, 7rem)' }}>
                   {slide.num}
                 </p>
-                <h2 className="font-serif text-[#F6F0E8] mb-4" style={{ maxWidth: '100%' }}>
+                <h2 className="font-serif text-sand mb-4" style={{ maxWidth: '100%' }}>
                   {slide.name}
                 </h2>
-                <p className="font-sans text-[#F6F0E8]/65 text-lg leading-relaxed mb-6" style={{ maxWidth: '48ch' }}>
+                <p className="font-sans text-sand/65 text-lg leading-relaxed mb-6" style={{ maxWidth: '48ch' }}>
                   {slide.tagline}
                 </p>
 
@@ -208,8 +209,7 @@ export default function DivisionSlider() {
                   {slide.caps.map(cap => (
                     <span
                       key={cap}
-                      className="font-sans text-[11px] font-medium rounded-full px-3 py-1"
-                      style={{ backgroundColor: 'rgba(246,240,232,0.1)', color: 'rgba(246,240,232,0.7)', border: '1px solid rgba(246,240,232,0.15)' }}
+                      className="font-sans text-[11px] font-medium rounded-full px-3 py-1 bg-sand/10 text-sand/70 border border-sand/15"
                     >
                       {cap}
                     </span>
@@ -218,10 +218,7 @@ export default function DivisionSlider() {
 
                 <Link
                   to={slide.href}
-                  className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200"
-                  style={{ backgroundColor: '#C4763A', color: '#F6F0E8' }}
-                  onMouseOver={e => e.currentTarget.style.backgroundColor = '#A8612E'}
-                  onMouseOut={e  => e.currentTarget.style.backgroundColor = '#C4763A'}
+                  className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200 bg-clay text-sand hover:bg-clay-dark"
                 >
                   Explore {slide.name.split(' ')[0]} →
                 </Link>
@@ -234,15 +231,10 @@ export default function DivisionSlider() {
                   {SLIDES.map((s, di) => (
                     <button
                       key={s.id}
+                      type="button"
                       onClick={() => goTo(di, di > current ? 1 : -1)}
                       aria-label={`Go to ${s.name}`}
-                      className="transition-all duration-300"
-                      style={{
-                        width:  di === i ? '28px' : '8px',
-                        height: '8px',
-                        borderRadius: '4px',
-                        backgroundColor: di === i ? '#C4763A' : 'rgba(246,240,232,0.3)',
-                      }}
+                      className={`transition-all duration-300 rounded-full h-2 ${di === i ? 'w-7 bg-clay' : 'w-2 bg-sand/30'}`}
                     />
                   ))}
                 </div>
@@ -250,22 +242,18 @@ export default function DivisionSlider() {
                 {/* Prev / Next */}
                 <div className="flex gap-2">
                   <button
+                    type="button"
                     onClick={() => goTo((current - 1 + SLIDES.length) % SLIDES.length, -1)}
                     aria-label="Previous division"
-                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200"
-                    style={{ border: '1px solid rgba(246,240,232,0.25)', color: '#F6F0E8' }}
-                    onMouseOver={e => e.currentTarget.style.borderColor = '#C4763A'}
-                    onMouseOut={e  => e.currentTarget.style.borderColor = 'rgba(246,240,232,0.25)'}
+                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200 border border-sand/25 text-sand hover:border-clay"
                   >
                     ←
                   </button>
                   <button
+                    type="button"
                     onClick={() => goTo((current + 1) % SLIDES.length, 1)}
                     aria-label="Next division"
-                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200"
-                    style={{ border: '1px solid rgba(246,240,232,0.25)', color: '#F6F0E8' }}
-                    onMouseOver={e => e.currentTarget.style.borderColor = '#C4763A'}
-                    onMouseOut={e  => e.currentTarget.style.borderColor = 'rgba(246,240,232,0.25)'}
+                    className="min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center transition-colors duration-200 border border-sand/25 text-sand hover:border-clay"
                   >
                     →
                   </button>
@@ -277,11 +265,11 @@ export default function DivisionSlider() {
       ))}
 
       {/* Progress bar */}
-      <div className="absolute bottom-0 left-0 right-0 h-[2px] z-20" style={{ backgroundColor: 'rgba(246,240,232,0.08)' }}>
+      <div className="absolute bottom-0 left-0 right-0 h-[2px] z-20 bg-sand/10">
         <div
           ref={progressRef}
-          className="h-full origin-left"
-          style={{ backgroundColor: '#C4763A', transform: 'scaleX(0)' }}
+          className="h-full origin-left bg-clay"
+          style={{ transform: 'scaleX(0)' }}
         />
       </div>
     </section>

@@ -28,7 +28,7 @@ function AppRoutes() {
   }, [pathname])
 
   return (
-    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#1D2B1D' }} />}>
+    <Suspense fallback={<div className="min-h-screen bg-forest" />}>
       <Routes>
         <Route path="/"              element={<Home />} />
         <Route path="/it-consulting" element={<ITConsulting />} />

@@ -16,9 +16,18 @@ export default function Navbar() {
     setServicesOpen(false)
   }, [location.pathname])
 
-  /* Simple scroll threshold — no GSAP, no flicker */
+  /* requestAnimationFrame throttled scroll listener for performance */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    let ticking = false
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setScrolled(window.scrollY > 60)
+          ticking = false
+        })
+        ticking = true
+      }
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
@@ -32,28 +41,21 @@ export default function Navbar() {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-      style={{
-        backgroundColor: scrolled ? 'rgba(246,240,232,0.97)' : 'transparent',
-        backdropFilter:  scrolled ? 'blur(12px)' : 'none',
-        boxShadow:       scrolled ? '0 1px 0 rgba(0,0,0,0.06)' : 'none',
-      }}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-sand/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)]' : 'bg-transparent'}`}
     >
       <nav
         className="mx-auto flex items-center justify-between h-20"
         style={{ maxWidth: '1200px', paddingInline: 'clamp(1.5rem, 5vw, 5rem)' }}
       >
         {/* Logo lockup */}
-        <Link to="/" className="flex flex-col leading-none z-50">
+        <Link to="/" className="flex flex-col leading-none z-50 group">
           <span
-            className="font-serif text-xl font-bold tracking-tight transition-colors duration-300"
-            style={{ color: textColor }}
+            className={`font-serif text-xl font-bold tracking-tight transition-colors duration-300 ${scrolled ? 'text-forest' : 'text-sand'}`}
           >
             MPSM
           </span>
           <span
-            className="font-sans font-semibold text-[9px] tracking-[0.14em] uppercase mt-0.5 transition-colors duration-300"
-            style={{ color: mutedColor }}
+            className={`font-sans font-semibold text-[9px] tracking-[0.14em] uppercase mt-0.5 transition-colors duration-300 ${scrolled ? 'text-ink-muted' : 'text-sand/55'}`}
           >
             Services
           </span>
@@ -70,8 +72,10 @@ export default function Navbar() {
                 onMouseLeave={() => setServicesOpen(false)}
               >
                 <button
-                  className="flex items-center gap-1 font-sans font-medium text-sm transition-colors duration-300"
-                  style={{ color: textColor }}
+                  type="button"
+                  aria-expanded={servicesOpen}
+                  aria-controls="services-menu"
+                  className={`flex items-center gap-1 font-sans font-medium text-sm transition-colors duration-300 ${scrolled ? 'text-forest' : 'text-sand'}`}
                 >
                   {item.name}
                   <ChevronDown
@@ -83,6 +87,7 @@ export default function Navbar() {
 
                 {/* Dropdown */}
                 <div
+                  id="services-menu"
                   className="absolute top-full pt-2 left-1/2 -translate-x-1/2 w-64 transition-all duration-200 origin-top"
                   style={{
                     opacity:    servicesOpen ? 1 : 0,
@@ -92,17 +97,13 @@ export default function Navbar() {
                   }}
                 >
                   <div
-                    className="rounded-xl py-2 px-1.5"
-                    style={{ backgroundColor: '#FFFFFF', boxShadow: '0 8px 32px rgba(0,0,0,0.10)' }}
+                    className="rounded-xl py-2 px-1.5 bg-white shadow-[0_8px_32px_rgba(0,0,0,0.10)]"
                   >
                     {item.children.map(child => (
                       <Link
                         key={child.name}
                         to={child.href}
-                        className="block px-4 py-2.5 rounded-lg font-sans text-sm transition-colors duration-150"
-                        style={{ color: '#1D2B1D' }}
-                        onMouseOver={e => { e.currentTarget.style.backgroundColor = '#F6F0E8'; e.currentTarget.style.color = '#C4763A' }}
-                        onMouseOut={e  => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#1D2B1D' }}
+                        className="block px-4 py-2.5 rounded-lg font-sans text-sm transition-colors duration-150 text-forest hover:bg-sand hover:text-clay"
                       >
                         {child.name}
                       </Link>
@@ -114,10 +115,7 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.href}
-                className="font-sans font-medium text-sm transition-colors duration-300"
-                style={{ color: textColor }}
-                onMouseOver={e => e.currentTarget.style.color = '#C4763A'}
-                onMouseOut={e  => e.currentTarget.style.color = textColor}
+                className={`font-sans font-medium text-sm transition-colors duration-300 hover:text-clay ${scrolled ? 'text-forest' : 'text-sand'}`}
               >
                 {item.name}
               </Link>
@@ -126,14 +124,7 @@ export default function Navbar() {
 
           <Link
             to="/contact"
-            className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-6 py-2.5 min-h-[44px] transition-colors duration-200"
-            style={{
-              backgroundColor: scrolled ? '#C4763A' : 'rgba(246,240,232,0.15)',
-              color: '#F6F0E8',
-              border: scrolled ? 'none' : '1px solid rgba(246,240,232,0.3)',
-            }}
-            onMouseOver={e => e.currentTarget.style.backgroundColor = scrolled ? '#A8612E' : 'rgba(246,240,232,0.25)'}
-            onMouseOut={e  => e.currentTarget.style.backgroundColor = scrolled ? '#C4763A' : 'rgba(246,240,232,0.15)'}
+            className={`inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-6 py-2.5 min-h-[44px] transition-colors duration-200 text-sand ${scrolled ? 'bg-clay hover:bg-clay-dark border-transparent' : 'bg-sand/15 hover:bg-sand/25 border border-sand/30'}`}
           >
             Partner With Us →
           </Link>
@@ -141,10 +132,12 @@ export default function Navbar() {
 
         {/* Hamburger */}
         <button
-          className="md:hidden z-50 p-2 rounded-md transition-colors duration-200"
-          style={{ color: mobileOpen ? '#F6F0E8' : textColor }}
+          type="button"
+          className={`md:hidden z-50 p-2 rounded-md transition-colors duration-200 ${mobileOpen ? 'text-sand' : scrolled ? 'text-forest' : 'text-sand'}`}
           onClick={() => setMobileOpen(v => !v)}
           aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
         >
           {mobileOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -152,9 +145,9 @@ export default function Navbar() {
 
       {/* Mobile overlay — forest background */}
       <div
-        className="fixed inset-0 md:hidden transition-all duration-500"
+        id="mobile-menu"
+        className="fixed inset-0 md:hidden transition-all duration-500 bg-forest"
         style={{
-          backgroundColor: '#1D2B1D',
           opacity:    mobileOpen ? 1 : 0,
           transform:  mobileOpen ? 'translateX(0)' : 'translateX(100%)',
           pointerEvents: mobileOpen ? 'auto' : 'none',
@@ -166,10 +159,7 @@ export default function Navbar() {
             <div key={item.name} className="flex flex-col gap-3">
               <Link
                 to={item.href === '#' ? '/' : item.href}
-                className="font-serif text-3xl font-semibold transition-colors duration-200"
-                style={{ color: '#F6F0E8' }}
-                onMouseOver={e => e.currentTarget.style.color = '#C4763A'}
-                onMouseOut={e  => e.currentTarget.style.color = '#F6F0E8'}
+                className="font-serif text-3xl font-semibold transition-colors duration-200 text-sand hover:text-clay"
               >
                 {item.name}
               </Link>
@@ -179,10 +169,7 @@ export default function Navbar() {
                     <Link
                       key={child.name}
                       to={child.href}
-                      className="font-sans text-base transition-colors duration-200"
-                      style={{ color: 'rgba(246,240,232,0.45)' }}
-                      onMouseOver={e => e.currentTarget.style.color = '#F6F0E8'}
-                      onMouseOut={e  => e.currentTarget.style.color = 'rgba(246,240,232,0.45)'}
+                      className="font-sans text-base transition-colors duration-200 text-sand/45 hover:text-sand"
                     >
                       {child.name}
                     </Link>
@@ -195,10 +182,7 @@ export default function Navbar() {
           <div className="pt-2">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200"
-              style={{ backgroundColor: '#C4763A', color: '#F6F0E8' }}
-              onMouseOver={e => e.currentTarget.style.backgroundColor = '#A8612E'}
-              onMouseOut={e  => e.currentTarget.style.backgroundColor = '#C4763A'}
+              className="inline-flex items-center justify-center font-sans font-semibold text-sm rounded-full px-8 py-3.5 min-h-[48px] transition-colors duration-200 bg-clay text-sand hover:bg-clay-dark"
             >
               Partner With Us →
             </Link>
