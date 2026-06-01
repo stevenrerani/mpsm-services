@@ -43,10 +43,7 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-sand/95 backdrop-blur-md shadow-[0_1px_0_rgba(0,0,0,0.06)]' : 'bg-transparent'}`}
     >
-      <nav
-        className="mx-auto flex items-center justify-between h-20"
-        style={{ maxWidth: '1200px', paddingInline: 'clamp(1.5rem, 5vw, 5rem)' }}
-      >
+      <nav className="container w-full flex items-center justify-between h-20">
         {/* Logo lockup */}
         <Link to="/" className="flex flex-col leading-none z-50 group">
           <span

@@ -23,7 +23,7 @@ export default function SectionWrapper({
 
   return (
     <section id={id} className={`w-full ${getBgClass()} ${getPaddingClass()} ${className}`.trim()}>
-      <div className="max-w-[var(--max-content-width)] mx-auto px-6 md:px-12 lg:px-16">
+      <div className="container">
         {children}
       </div>
     </section>

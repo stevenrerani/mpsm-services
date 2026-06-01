@@ -61,7 +61,7 @@ export default function HorizontalAdvantage() {
       ref={sectionRef}
       className="relative bg-sand overflow-hidden min-h-screen"
     >
-      <div className="max-w-[1280px] mx-auto px-6 md:px-10 pt-28 lg:pt-36 pb-16">
+      <div className="container pt-28 lg:pt-36 pb-16">
         {/* Header */}
         <div className="mb-14">
           <p className="font-mono text-[11px] tracking-[0.22em] uppercase text-gold mb-5">
