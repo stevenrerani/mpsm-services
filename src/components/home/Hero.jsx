@@ -105,7 +105,7 @@ export default function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <div ref={indicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+      <div ref={indicatorRef} className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2">
         <span className="font-sans text-[10px] tracking-[0.12em] uppercase text-sand/30">Scroll</span>
         <div className="w-px h-10 bg-sand/15" />
       </div>
