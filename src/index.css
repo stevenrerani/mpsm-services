@@ -78,6 +78,19 @@
     padding-bottom: clamp(4rem, 8vw, 8rem);
   }
 
+  .section-padding {
+    padding-top: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+  }
+
+  .section-padding-top {
+    padding-top: clamp(4rem, 8vw, 8rem);
+  }
+
+  .section-padding-bottom {
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+  }
+
   .container {
     max-width: 1200px;
     margin-inline: auto;
