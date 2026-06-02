@@ -9,12 +9,12 @@ export default function Advantage() {
 
   return (
     <SectionWrapper>
-      <div className="flex flex-col items-center text-center mb-16 max-w-2xl mx-auto">
-        <SectionLabel>WHY MPSM</SectionLabel>
+      <div className="flex flex-col items-center text-center mb-8 md:mb-16 max-w-2xl mx-auto">
+        <div className="hidden sm:block"><SectionLabel>WHY MPSM</SectionLabel></div>
         <h2>The MPSM Advantage</h2>
       </div>
 
-      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-16 lg:gap-24 mt-12">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 mt-4 md:mt-12">
         {advantages.map((item) => (
           <div key={item.id} className="flex flex-col items-start">
             <div className="mb-6 text-[var(--color-olive)]">
